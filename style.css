@@ -1,0 +1,417 @@
+:root {
+  --navy: #0b2e5c;
+  --blue: #1a5fb4;
+  --blue-light: #e8f0fb;
+  --red: #c8202f;
+  --orange: #e8631c;
+  --gray-bg: #f4f5f7;
+  --card-bg: #ffffff;
+  --border: #e1e4e8;
+  --text-main: #1c1f24;
+  --text-sub: #5b6470;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--gray-bg);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+               "Microsoft JhengHei", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+body { overflow-x: hidden; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 16px 10px;
+  text-align: center;
+}
+.app-header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.app-header .subtitle {
+  margin: 3px 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e3edfa;
+}
+.app-header .org-line {
+  margin: 6px 0 0;
+  font-size: 0.72rem;
+  color: #a9c2e0;
+  letter-spacing: 0.01em;
+}
+.internal-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 10px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: #e3edfa;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+/* 品牌識別橘色細線，呼應據點查詢系統，僅作為系列識別，不大面積使用 */
+.header-accent-line {
+  height: 4px;
+  background: var(--orange);
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px 10px 24px;
+}
+
+/* 白色功能區塊卡片（搜尋／篩選／賽程顯示切換），置於淡灰底之上 */
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(20, 30, 50, 0.06);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.panel-label {
+  margin: 10px 0 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  letter-spacing: 0.02em;
+}
+.panel-label::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 0.75em;
+  background: var(--orange);
+  margin-right: 6px;
+  vertical-align: -1px;
+  border-radius: 1px;
+}
+.panel > .panel-label:first-child { margin-top: 0; }
+
+/* ---------- Date nav ---------- */
+.date-nav {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 8px 4px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.date-arrow {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  color: var(--blue);
+  font-weight: 700;
+}
+.date-strip {
+  flex: 1 1 auto;
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 6px;
+  padding: 2px 2px;
+}
+.date-strip::-webkit-scrollbar { display: none; }
+
+.date-chip {
+  flex: 0 0 auto;
+  min-width: 58px;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  text-align: center;
+  color: var(--text-main);
+  scroll-snap-align: center;
+}
+.date-chip .d-num { display: block; font-size: 0.95rem; font-weight: 700; }
+.date-chip .d-wd { display: block; font-size: 0.68rem; color: var(--text-sub); margin-top: 1px; }
+
+.date-chip.is-today { border-color: var(--red); }
+.date-chip.is-today .d-num { color: var(--red); }
+
+.date-chip.is-selected {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.date-chip.is-selected .d-num,
+.date-chip.is-selected .d-wd { color: #fff; }
+
+/* ---------- Search ---------- */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: var(--gray-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+}
+.search-icon { font-size: 1rem; margin-right: 6px; opacity: 0.6; }
+#searchInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  min-width: 0;
+  color: var(--text-main);
+}
+.clear-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-sub);
+  font-size: 1rem;
+  padding: 2px 4px;
+}
+
+.search-scope {
+  display: flex;
+  gap: 8px;
+}
+.scope-btn {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 7px 8px;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+.scope-btn.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+/* ---------- Sport filter ---------- */
+.sport-filter {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.sport-filter::-webkit-scrollbar { display: none; }
+.sport-chip {
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-main);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.sport-chip.active {
+  background: var(--blue-light);
+  border-color: var(--blue);
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ---------- View toggle (全部/接下來) ---------- */
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.toggle-btn {
+  border: none;
+  background: #fff;
+  color: var(--text-main);
+  padding: 6px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.toggle-btn.active {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* ---------- Result header ---------- */
+.result-header {
+  padding: 4px 4px 6px 10px;
+  border-left: 3px solid var(--orange);
+}
+#resultTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.result-count {
+  margin: 3px 0 0;
+  font-size: 0.88rem;
+  color: var(--text-sub);
+}
+.result-count strong {
+  font-size: 1.05rem;
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ---------- Schedule list & cards ---------- */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(20, 30, 50, 0.08);
+  border: 1px solid var(--border);
+}
+.card.is-past { opacity: 0.55; }
+
+.card-top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.card-sport {
+  display: inline-block;
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.card-time {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--red);
+  white-space: pre-line;
+}
+.card-time.is-unparsed::after {
+  content: " ⚠";
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+
+.card-event {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 2px 0 6px;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.card-row {
+  font-size: 0.92rem;
+  color: var(--text-main);
+  margin: 3px 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-line;
+}
+.card-row .label {
+  color: var(--text-sub);
+  margin-right: 2px;
+}
+.card-venue {
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  margin-top: 6px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-line;
+}
+.card-note {
+  font-size: 0.85rem;
+  color: var(--blue);
+  background: var(--blue-light);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-top: 8px;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+}
+.card-result {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-top: 6px;
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-sub);
+}
+.empty-state p { font-size: 1rem; margin-bottom: 12px; }
+.empty-action-btn {
+  border: 1px solid var(--blue);
+  background: #fff;
+  color: var(--blue);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  text-align: center;
+  padding: 18px 20px 30px;
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  border-top: 3px solid var(--orange);
+  margin-top: 6px;
+}
+.footer-desktop { display: none; margin: 0; }
+.footer-mobile p { margin: 2px 0; }
+
+/* ---------- Desktop ---------- */
+@media (min-width: 760px) {
+  body { font-size: 16px; }
+  .app-header h1 { font-size: 1.5rem; }
+  .date-chip { min-width: 66px; }
+  main { padding-bottom: 32px; }
+  .footer-desktop { display: block; }
+  .footer-mobile { display: none; }
+}
